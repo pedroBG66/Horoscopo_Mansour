@@ -1,38 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/symbolImageView"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:src="@drawable/aries_icon"/>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="96dp"
-        android:orientation="vertical"
-        android:paddingVertical="8dp"
-        android:paddingHorizontal="16dp">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/nameTextView"
+        <ImageView
+            android:id="@+id/symbolImageView"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/aries_icon"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nombre"
-            android:textSize="36dp"
-            android:textStyle="bold"/>
+            android:layout_height="96dp"
+            android:orientation="vertical"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="16dp">
 
-        <TextView
-            android:id="@+id/datesTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Fechas"
-            android:textSize="24dp"/>
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre"
+                android:textSize="36dp"
+                android:textStyle="bold"/>
 
+            <TextView
+                android:id="@+id/datesTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fechas"
+                android:textSize="24dp"/>
 
+        </LinearLayout>
     </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:dividerInsetStart="16dp"
+        app:dividerInsetEnd="16dp"/>
 
 </LinearLayout>
