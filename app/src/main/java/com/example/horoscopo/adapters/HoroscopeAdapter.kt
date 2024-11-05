@@ -8,9 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.horoscopo.R
 import com.example.horoscopo.data.Horoscope
+import com.example.horoscopo.utils.SessionManager
 
 
-class HoroscopeAdapter(val items: List<Horoscope>, val onItemClick: (Int) -> Unit) : RecyclerView.Adapter<HoroscopeViewHolder>() {
+class HoroscopeAdapter(private var items: List<Horoscope>, val onItemClick: (Int) -> Unit) : RecyclerView.Adapter<HoroscopeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HoroscopeViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_horoscope, parent, false)
@@ -26,13 +27,18 @@ class HoroscopeAdapter(val items: List<Horoscope>, val onItemClick: (Int) -> Uni
             onItemClick(position)
         }
     }
+
+    fun setNewItems(items: List<Horoscope>) {
+        this.items = items
+    }
 }
 
 class HoroscopeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    var nameTextView: TextView = view.findViewById(R.id.nameTextView)
-    var datesTextView: TextView = view.findViewById(R.id.datesTextView)
-    var symbolImageView: ImageView = view.findViewById(R.id.symbolImageView)
+    private var nameTextView: TextView = view.findViewById(R.id.nameTextView)
+    private var datesTextView: TextView = view.findViewById(R.id.datesTextView)
+    private var symbolImageView: ImageView = view.findViewById(R.id.symbolImageView)
+    private var favoriteImageView: ImageView = view.findViewById(R.id.favoriteImageView)
 
     fun render(horoscope: Horoscope) {
         //val context = itemView.context
@@ -42,5 +48,13 @@ class HoroscopeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         nameTextView.setText(horoscope.name)
         datesTextView.setText(horoscope.dates)
         symbolImageView.setImageResource(horoscope.image)
+
+
+        if (SessionManager(itemView.context).isFavorite(horoscope.id)) {
+            favoriteImageView.visibility = View.VISIBLE
+
+        } else {
+            favoriteImageView.visibility = View.GONE
+        }
     }
 }

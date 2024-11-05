@@ -14,6 +14,10 @@
     <string name="horoscope_name_aquarius">Aquarius</string>
     <string name="horoscope_name_pisces">Pisces</string>
 
+    <string name="share_btn">share</string>
+    <string name="fav_btn">fav</string>
+    <string name="search_btn">search</string>
+
     <string name="horoscope_date_aries">March 21 to April 19</string>
     <string name="horoscope_date_taurus">April 20 to May 20</string>
     <string name="horoscope_date_gemini">May 21 to June 20</string>
@@ -26,5 +30,7 @@
     <string name="horoscope_date_capricorn">December 22 to January 19</string>
     <string name="horoscope_date_aquarius">January 20 to February 18</string>
     <string name="horoscope_date_pisces">February 19 to March 20</string>
+
+
 
 </resources>

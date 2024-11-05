@@ -10,12 +10,16 @@ import com.example.horoscopo.R
 import com.example.horoscopo.adapters.HoroscopeAdapter
 import com.example.horoscopo.data.Horoscope
 import com.example.horoscopo.data.HoroscopeProvider
+import com.example.horoscopo.utils.SessionManager
 
 class ListActivity : AppCompatActivity() {
 
     lateinit var horoscopeList: List<Horoscope>
 
     lateinit var recyclerView: RecyclerView
+
+
+    lateinit var adapterHoroscope: HoroscopeAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,17 +30,35 @@ class ListActivity : AppCompatActivity() {
 
         horoscopeList = HoroscopeProvider.findAll()
 
-        val adapter = HoroscopeAdapter(horoscopeList) { position ->
+
+
+       adapterHoroscope= HoroscopeAdapter(horoscopeList) { position ->
             val horoscope = horoscopeList[position]
             navigateToDetail(horoscope)
         }
-        recyclerView.adapter = adapter
+
+        recyclerView.adapter = adapterHoroscope
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
 
     }
 
+    override fun onResume() {
+
+
+        super.onResume()
+        //nos traemos la sesion donde tenemos el contexto
+        val session = SessionManager(this)
+        //hay que crear una lista mutable
+        horoscopeList = horoscopeList.sortedByDescending { session.isFavorite(it.id) }
+
+        adapterHoroscope.setNewItems(horoscopeList)
+        adapterHoroscope.notifyDataSetChanged()
+    }
+
     private fun navigateToDetail(horoscope: Horoscope) {
+
+
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra("horoscope_id", horoscope.id)
         startActivity(intent)
