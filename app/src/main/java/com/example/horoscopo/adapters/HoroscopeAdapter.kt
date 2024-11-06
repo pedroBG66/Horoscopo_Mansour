@@ -27,9 +27,15 @@ class HoroscopeAdapter(private var items: List<Horoscope>, val onItemClick: (Int
             onItemClick(position)
         }
     }
-
-    fun setNewItems(items: List<Horoscope>) {
+    //cualquier funcionalidad nueva hay qye decirselo al adapter
+    //esta funcion es para ordenar la lista con el fav arriba de la lista.
+    /*fun setNewItems(items: List<Horoscope>) {
         this.items = items
+    }*/
+    //esta funcion sirve para ir recargando la lista de coincidencias
+    fun updateItems(items: List<Horoscope>) {
+        this.items = items
+        notifyDataSetChanged()
     }
 }
 
