@@ -10,41 +10,101 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="centerCrop"
         android:src="@drawable/ndroidompact"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:scaleType="centerCrop"/>
-
-    <ImageView
-        android:id="@+id/iv"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="48dp"/>
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/tv"
+        android:id="@+id/zodiacNameDetailsPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Detalle del horoscopo"
         android:textSize="36dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/b"
+
+    <TextView
+        android:id="@+id/zodiacDatesDetailsPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Volver"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="50dp"
+        android:text="fechasssss"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="48dp"/>
+        app:layout_constraintTop_toTopOf="@+id/zodiacNameDetailsPage"
+        />
 
+    <TextView
+        android:id="@+id/luckTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Detalle del horoscopo"
+        android:textSize="18sp"
+        android:layout_margin="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/zodiacDatesDetailsPage"
+        android:layout_marginTop="20dp"
+         />
+
+
+    <TextView
+        android:id="@+id/element"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Element: Fire"
+        android:textSize="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/planet"
+        android:layout_marginTop="16dp"
+
+        />
+    <TextView
+        android:id="@+id/planet"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Planet: Mars"
+        android:textSize="36dp"
+        app:layout_constraintBottom_toTopOf="@+id/previous_zodiac"
+        app:layout_constraintStart_toStartOf="parent"
+  />
+
+    <Button
+        android:id="@+id/previous_zodiac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="48dp"
+        android:text="previous Zodiacs"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+    <Button
+        android:id="@+id/next_zodiac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next Zodiacs"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="48dp"
+        android:layout_margin="10dp"
+        />
+
+    <ImageView
+        android:id="@+id/zodiac_ic"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:scaleType="fitEnd"
+        app:layout_constraintBottom_toTopOf="@id/next_zodiac"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:src="@drawable/aries_icon">
+
+    </ImageView>
 </androidx.constraintlayout.widget.ConstraintLayout>

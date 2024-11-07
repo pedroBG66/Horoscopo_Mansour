@@ -3,5 +3,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="favorite">#E91E63</color>
-    <color name="share">#1E73E9</color>
+    <color name="share">#03A9F4</color>
+
+    <color name="fire">#EE0825</color>
+    <color name="water">#1166D1</color>
+    <color name="earth">#38AA21</color>
+    <color name="air">#00BCD4</color>
+
+
 </resources>

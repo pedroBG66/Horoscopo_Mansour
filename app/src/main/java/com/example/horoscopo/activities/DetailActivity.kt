@@ -12,6 +12,15 @@ import com.example.horoscopo.R
 import com.example.horoscopo.data.Horoscope
 import com.example.horoscopo.data.HoroscopeProvider
 import com.example.horoscopo.utils.SessionManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.net.URL
+import javax.net.ssl.HttpsURLConnection
 
 class DetailActivity : AppCompatActivity() {
 
@@ -23,6 +32,8 @@ class DetailActivity : AppCompatActivity() {
     lateinit var favoriteMenuItem: MenuItem
 
     lateinit var session: SessionManager
+    lateinit var luckTextView: TextView
+    lateinit var zodiacIcon: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,16 +52,22 @@ class DetailActivity : AppCompatActivity() {
 
         // Instanciamos el objeto de la sesión
         session = SessionManager(this)
+        //llamamos al texto de la suerte del dia
+        luckTextView = findViewById(R.id.luckTextView)
+        zodiacIcon = findViewById(R.id.zodiac_ic)
 
         // Revisamos si el horóscopo es favorito
         isFavorite = session.isFavorite(horoscope.id)
 
 
-        findViewById<TextView>(R.id.tv).setText(horoscope.name)
-        findViewById<ImageView>(R.id.iv).setImageResource(horoscope.image)
-        findViewById<Button>(R.id.b).setOnClickListener {
-            finish()
-        }
+        zodiacIcon.setImageResource(horoscope.image)
+        findViewById<TextView>(R.id.zodiacNameDetailsPage).setText(horoscope.name)
+        findViewById<TextView>(R.id.zodiacDatesDetailsPage).setText(horoscope.dates)
+        findViewById<TextView>(R.id.element).text = getString(R.string.element_label, getString(horoscope.getElementStringRes()))
+        findViewById<TextView>(R.id.element).setTextColor(getColor(horoscope.getElementColorRes()))
+        findViewById<TextView>(R.id.planet).text = getString(R.string.planet_label, getString(horoscope.planet))
+        getHoroscopeLuck()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -96,6 +113,44 @@ class DetailActivity : AppCompatActivity() {
         } else {
             favoriteMenuItem.setIcon(R.drawable.ic_favorite_border_24)
         }
+    }
+
+    //funcion para coger la API de la pagina
+    fun getHoroscopeLuck() {
+        var result = "Antes de hacer la llamada"
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val url = URL("https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily?sign=${horoscope.id}&day=TODAY")
+            val con = url.openConnection() as HttpsURLConnection
+            con.requestMethod = "GET"
+            val responseCode = con.responseCode
+            println("Response Code :: $responseCode")
+            if (responseCode == HttpsURLConnection.HTTP_OK) { // connection ok
+                val jsonResponse = readStream(con.inputStream).toString()
+                result = JSONObject(jsonResponse).getJSONObject("data").getString("horoscope_data")
+            } else {
+                result = "Hubo un error en la llamada"
+            }
+
+            //con esto podemos evitar tener que poner el codigo de abajo con el dispacher del main
+            /*runOnUiThread {
+                println(result)
+            }*/
+            CoroutineScope(Dispatchers.Main).launch {
+                luckTextView.text = result
+            }
+        }
+    }
+//esta funcion parsea la informacion del json de la api
+    private fun readStream (inputStream: InputStream) : StringBuilder {
+        val reader = BufferedReader(InputStreamReader(inputStream))
+        val response = StringBuilder()
+        var line: String?
+        while (reader.readLine().also { line = it } != null) {
+            response.append(line)
+        }
+        reader.close()
+        return response
     }
 
     override fun onBackPressed() {
