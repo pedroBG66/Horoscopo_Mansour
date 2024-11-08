@@ -33,17 +33,17 @@
 
 
     <string name="horoscope_planet_aries">Mars</string>
-    <string name="horoscope_planet_taurus">April 20 to May 20</string>
-    <string name="horoscope_planet_gemini">May 21 to June 20</string>
-    <string name="horoscope_planet_cancer">June 21 to July 22</string>
-    <string name="horoscope_planet_leo">July 23 to August 22</string>
-    <string name="horoscope_planet_virgo">August 23 to September 22</string>
-    <string name="horoscope_planet_libra">September 23 to October 22</string>
-    <string name="horoscope_planet_scorpio">October 23 to November 21</string>
-    <string name="horoscope_planet_sagittarius">November 22 to December 21</string>
-    <string name="horoscope_planet_capricorn">December 22 to January 19</string>
-    <string name="horoscope_planet_aquarius">January 20 to February 18</string>
-    <string name="horoscope_planet_pisces">February 19 to March 20</string>
+    <string name="horoscope_planet_taurus">Venus</string>
+    <string name="horoscope_planet_gemini">Mercury</string>
+    <string name="horoscope_planet_cancer">Moon</string>
+    <string name="horoscope_planet_leo">Sun</string>
+    <string name="horoscope_planet_virgo">Mercury</string>
+    <string name="horoscope_planet_libra">Venus</string>
+    <string name="horoscope_planet_scorpio">Mars</string>
+    <string name="horoscope_planet_sagittarius">Jupiter</string>
+    <string name="horoscope_planet_capricorn">Saturn</string>
+    <string name="horoscope_planet_aquarius">Saturn</string>
+    <string name="horoscope_planet_pisces">Jupiter</string>
 
 
     <string name="horoscope_element_fire">Fire</string>

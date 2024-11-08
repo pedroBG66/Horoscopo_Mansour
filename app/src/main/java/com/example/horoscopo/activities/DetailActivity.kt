@@ -1,5 +1,6 @@
 package com.example.horoscopo.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -34,6 +35,9 @@ class DetailActivity : AppCompatActivity() {
     lateinit var session: SessionManager
     lateinit var luckTextView: TextView
     lateinit var zodiacIcon: ImageView
+    lateinit var previous_zodiac: Button
+    lateinit var next_zodiac: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,11 +46,8 @@ class DetailActivity : AppCompatActivity() {
 
         val id = intent.getStringExtra("horoscope_id")!!
 
-        horoscope = HoroscopeProvider.findById(id)
+        loadData(id)
 
-        // Modificamos el ActionBar para mostrar título y subtítulo
-        supportActionBar?.title = getString(horoscope.name)
-        supportActionBar?.subtitle = getString(horoscope.dates)
         // Habilitamos el boton de volver atras en el ActionBar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -55,9 +56,13 @@ class DetailActivity : AppCompatActivity() {
         //llamamos al texto de la suerte del dia
         luckTextView = findViewById(R.id.luckTextView)
         zodiacIcon = findViewById(R.id.zodiac_ic)
+        previous_zodiac = findViewById(R.id.previous_zodiac)
+        next_zodiac = findViewById(R.id.next_zodiac)
 
         // Revisamos si el horóscopo es favorito
         isFavorite = session.isFavorite(horoscope.id)
+
+
 
 
         zodiacIcon.setImageResource(horoscope.image)
@@ -66,8 +71,27 @@ class DetailActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.element).text = getString(R.string.element_label, getString(horoscope.getElementStringRes()))
         findViewById<TextView>(R.id.element).setTextColor(getColor(horoscope.getElementColorRes()))
         findViewById<TextView>(R.id.planet).text = getString(R.string.planet_label, getString(horoscope.planet))
+
+        next_zodiac.setOnClickListener {
+            navigateToZodiac(isNext = true)
+        }
+
+        previous_zodiac.setOnClickListener {
+            navigateToZodiac(isNext = false)
+        }
+
+
         getHoroscopeLuck()
 
+    }
+
+    private fun loadData(id: String) {
+
+        horoscope = HoroscopeProvider.findById(id)
+
+        // Modificamos el ActionBar para mostrar título y subtítulo
+        supportActionBar?.title = getString(horoscope.name)
+        supportActionBar?.subtitle = getString(horoscope.dates)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -160,4 +184,29 @@ class DetailActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
+    fun navigateToZodiac(isNext: Boolean) {
+        val nextHoroscope = if (isNext) {
+            HoroscopeProvider.getNextHoroscope(horoscope.id)
+        } else {
+            HoroscopeProvider.getPreviousHoroscope(horoscope.id)
+        }
+
+        val intent = Intent(this, DetailActivity::class.java).apply {
+            putExtra("horoscope_id", nextHoroscope.id)
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+
+        }
+        startActivity(intent)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        val id = intent.getStringExtra("horoscope_id")!!
+        println("onNewIntent: $id")
+
+        loadData(id)
+    }
+
+
 }
+
